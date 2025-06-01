@@ -107,7 +107,7 @@ export default function Portfolio() {
       tags: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind CSS", "JWT"],
       highlights: ["User Auth", "CRUD blog posts", "Like/Comment system", "Responsive UI"],
       github: "https://github.com/mamee13/blog_website",
-      demo: "https://blog-website-steel-iota.vercel.app/",
+      demo: "https://blog-website-l3ib.vercel.app/",
       // image: "/placeholder-blog.png" 
     },
   ], []);
