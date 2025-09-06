@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -31,9 +32,17 @@ const getSkillIcon = (skillName: string, color: string) => {
     case "css3":
       return <svg viewBox="0 0 32 32" {...iconProps} fill={color}><path fill="#fff" d="M4 2h24l-2.2 25L16 30l-9.8-2.8L4 2zm20.1 7.3H11.4l.4 4.2h11.9l-.8 9.3-5.8 1.6-5.8-1.6-.4-4h-4l.5 6.5L16 26l7.5-2.1.9-10.2-.1-.4z" /></svg>;
     case "git":
-      return <svg viewBox="0 0 32 32" {...iconProps} fill="currentColor"><path fill="#fff" d="M30.9 14.1L17.9.9a2.7 2.7 0 00-3.8 0L1.1 14.1a2.7 2.7 0 000 3.8l6.2 6.2H4.8c-1.5 0-2.7 1.2-2.7 2.7s1.2 2.7 2.7 2.7h5.5l-2.1 2.1a2.7 2.7 0 103.8 3.8l2.1-2.1v-2.5c0-1.5 1.2-2.7 2.7-2.7s2.7 1.2 2.7 2.7v2.5l2.1 2.1a2.7 2.7 0 103.8-3.8L22.1 28h5.5c1.5 0 2.7-1.2 2.7-2.7s-1.2-2.7-2.7-2.7h-2.5l6.2-6.2c1-1 1-2.7 0-3.7zM16 21.3a5.3 5.3 0 110-10.6 5.3 5.3 0 010 10.6z" /></svg>;
+      return <svg viewBox="0 0 128 128" {...iconProps} fill="#F05032"><circle cx="64" cy="64" r="64"/><path fill="#fff" d="M94 64c0 17.7-14.3 32-32 32s-32-14.3-32-32 14.3-32 32-32 32 14.3 32 32z"/><text x="64" y="84" textAnchor="middle" fontSize="48" fill="#fff" fontFamily="Arial, sans-serif" fontWeight="bold">G</text></svg>;
     case "sql":
       return <svg viewBox="0 0 32 32" {...iconProps} fill="currentColor"><ellipse cx="16" cy="8" rx="12" ry="4" /><path d="M4 10v12c0 2.2 5.4 4 12 4s12-1.8 12-4V10c0 2.2-5.4 4-12 4s-12-1.8-12-4z" /><ellipse cx="16" cy="22" rx="12" ry="4" /><text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="10" fill="#fff" fontWeight="bold">SQL</text></svg>;
+    case "flutter":
+      return <svg viewBox="0 0 24 24" {...iconProps} fill="currentColor"><path d="M14.23 12.004a2.236 2.236 0 0 0 .54-1.503 2.234 2.234 0 0 0-.54-1.503l-3.46-3.46a.75.75 0 0 0-1.06 0l-3.46 3.46a2.236 2.236 0 0 0 0 3.006l3.46 3.46a.75.75 0 0 0 1.06 0l3.46-3.46zm-1.06 1.503L12 15.067l-1.17-1.56a.75.75 0 0 0-1.06 0l-1.17 1.56-1.17-1.56a.75.75 0 0 0-1.06 0L5.36 12.004a.75.75 0 0 0 0-1.06l1.17-1.56 1.17 1.56a.75.75 0 0 0 1.06 0l1.17-1.56 1.17 1.56a.75.75 0 0 0 1.06 0l1.17-1.56 1.17 1.56a.75.75 0 0 0 1.06 0l1.17-1.56a.75.75 0 0 0 0 1.06z"/></svg>;
+    case "postgresql":
+      return <svg viewBox="0 0 32 32" {...iconProps} fill="currentColor"><path d="M16 0C7.16 0 0 7.16 0 16s7.16 16 16 16 16-7.16 16-16S24.84 0 16 0zm8 24H8V8h16v16z"/><path d="M12 10h8v2h-8zm0 4h8v2h-8zm0 4h6v2h-6z"/></svg>;
+    case "mysql":
+      return <svg viewBox="0 0 32 32" {...iconProps} fill="currentColor"><ellipse cx="16" cy="8" rx="12" ry="4"/><path d="M4 10v12c0 2.2 5.4 4 12 4s12-1.8 12-4V10c0 2.2-5.4 4-12 4s-12-1.8-12-4z"/><ellipse cx="16" cy="22" rx="12" ry="4"/><text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="10" fill="#fff" fontWeight="bold">MySQL</text></svg>;
+    case "aws":
+      return <svg viewBox="0 0 32 32" {...iconProps} fill="currentColor"><path d="M16 2L2 8v16l14 6 14-6V8L16 2zm0 2.83l11.09 4.67L16 17.17 4.91 9.5 16 4.83zM4 10.24l12 7.76v10.76l-12-5.1V10.24zm16 0v13.42l12-5.1V10.24l-12 7.76z"/></svg>;
     default:
       return <Code {...iconProps} />;
   }
@@ -42,17 +51,11 @@ const getSkillIcon = (skillName: string, color: string) => {
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState("about");
-  const [theme, setTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
-    if (typeof window !== "undefined") {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initialTheme = prefersDark ? "dark" : "light";
-      setTheme(initialTheme);
-      document.documentElement.className = initialTheme;
-    }
   }, []);
 
   const toggleTheme = () => {
@@ -66,7 +69,10 @@ export default function Portfolio() {
   };
 
   const skills = useMemo(() => [
+    { name: "Flutter", color: "#02569B", category: "Mobile" },
     { name: "MongoDB", color: "#4DB33D", category: "Database" },
+    { name: "PostgreSQL", color: "#336791", category: "Database" },
+    { name: "MySQL", color: "#4479A1", category: "Database" },
     { name: "Express", color: "#000000", category: "Backend" },
     { name: "React", color: "#61DAFB", category: "Frontend" },
     { name: "Node.js", color: "#339933", category: "Backend" },
@@ -74,15 +80,13 @@ export default function Portfolio() {
     { name: "React Native", color: "#61DAFB", category: "Mobile" },
     { name: "JavaScript", color: "#F7DF1E", category: "Language" },
     { name: "TypeScript", color: "#3178C6", category: "Language" },
-    { name: "HTML5", color: "#E34F26", category: "Frontend" },
-    { name: "CSS3", color: "#1572B6", category: "Frontend" },
     { name: "Git", color: "#F05032", category: "Tools" },
-    { name: "SQL", color: "#4479A1", category: "Database" },
+    { name: "AWS", color: "#FF9900", category: "Cloud" },
   ], []);
 
   const projects = useMemo(() => [
     {
-      title: "Freelance Platform for Clients & Editors",
+      title: "EditorsHub: Freelance Platform for Clients & Editors",
       description:
         "A full-stack freelance platform connecting clients with editors, featuring real-time chat, Stripe payments, and role-based dashboards.",
       tags: ["React", "Vite", "Node.js", "Express", "Supabase", "MongoDB", "Socket.io", "Stripe"],
@@ -90,7 +94,7 @@ export default function Portfolio() {
       github: "https://github.com/mamee13/EditorsHub",
       demo: "https://editors-hub.vercel.app/",
       // image field is no longer used for display but can be kept for data purposes
-      // image: "/placeholder-editorshub.png" 
+      // image: "/placeholder-editorshub.png"
     },
     {
       title: "WKU Construction Management System (CMS)",
@@ -108,15 +112,36 @@ export default function Portfolio() {
       highlights: ["User Auth", "CRUD blog posts", "Like/Comment system", "Responsive UI"],
       github: "https://github.com/mamee13/blog_website",
       demo: "https://blog-website-l3ib.vercel.app/",
-      // image: "/placeholder-blog.png" 
+      // image: "/placeholder-blog.png"
+    },
+    {
+      title: "Screen Recorder",
+      description: "A Flutter-based screen recording app for Android devices. Easily record your screen with customizable settings including resolution, frame rate, bitrate, and audio inclusion.",
+      tags: ["Flutter", "Android", "Mobile"],
+      highlights: ["High-quality screen recording with multiple resolution options (480p, 720p, 1080p)", "Customizable FPS (24-60) and bitrate settings", "Audio recording option", "Countdown timer before recording starts", "Pause and resume functionality", "Recording history with playback", "Dark/Light theme support", "Onboarding for first-time users"],
+      demo: "https://github.com/mamee13/screen_recorder",
+    },
+    {
+      title: "Background Video Recorder",
+      description: "A Flutter-based mobile application that allows you to record high-quality videos in the background on your Android or iOS device. Perfect for capturing moments without keeping the app open.",
+      tags: ["Flutter", "Android", "iOS", "Mobile"],
+      highlights: ["Background Recording: Record videos even when the app is minimized or the screen is locked.", "Camera Selection: Choose between front and back camera.", "Quality Options: Select from 480p, 720p, or 1080p resolution.", "Recording History: View and manage your recorded videos.", "Persistent Notification: Stay informed about recording status.", "Permissions Management: Easy permission handling for camera, microphone, and storage."],
+      demo: "https://github.com/mamee13/screen_recorder",
+    },
+    {
+      title: "CliClock",
+      description: "Cliclock is a sleek and intuitive mobile app built with Flutter, designed to help you manage time effectively. Whether you need a precise clock, a countdown timer, or customizable settings.",
+      tags: ["Flutter", "Mobile"],
+      highlights: ["Digital Clock: Accurate time display with customizable themes", "Timer: Set countdown timers for various tasks", "Themes: Choose from beautiful UI's with Google Fonts integration", "Settings: Personalize your experience with theme and preference options", "Contact: Easy access to support and feedback"],
+      demo: "https://github.com/mamee13/Cliclock",
     },
   ], []);
 
   const stats = useMemo(() => [
-    { value: "5+", label: "Projects Completed", icon: <Code className="w-6 h-6 text-primary" /> },
-    { value: "2+", label: "Years of Experience", icon: <Palette className="w-6 h-6 text-primary" /> },
-    { value: "MERN", label: "Primary Stack", icon: <Server className="w-6 h-6 text-primary" /> },
-    { value: "Web & Mobile", label: "Platforms", icon: <Smartphone className="w-6 h-6 text-primary" /> },
+    { value: "6+", label: "Projects Completed", icon: <Code className="w-6 h-6 text-primary" /> },
+    { value: "3+", label: "Years of Experience", icon: <Palette className="w-6 h-6 text-primary" /> },
+    { value: "Flutter", label: "Primary Stack for mobile app development", icon: <Server className="w-6 h-6 text-primary" /> },
+    { value: "MERN", label: "Primary Stack for web app development", icon: <Smartphone className="w-6 h-6 text-primary" /> },
   ], []);
 
   if (!isMounted) {
@@ -155,7 +180,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-xl md:text-2xl text-primary dark:text-primary-light mt-1"
               >
-                Junior Fullstack Developer
+                Mobile app and Fullstack Developer
               </motion.p>
               <motion.div 
                 initial={{ y: -20, opacity: 0 }}
@@ -234,7 +259,10 @@ export default function Portfolio() {
                     </CardHeader>
                     <CardContent className="text-lg space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
                       <p>
-                        I'm Mamaru Yirga, a passionate Fullstack Developer dedicated to crafting clean, functional, and user-centric digital experiences. My expertise spans the MERN stack (MongoDB, Express, React, Node.js) and Next.js for performant web applications. I also build cross-platform mobile apps with React Native.
+                        I'm Mamaru Yirga, a passionate Mobile App Developer (Flutter) and Fullstack website
+                        Developer dedicated to crafting clean, functional, and user-centric digital experiences. My
+                        expertise spans Flutter and MERN stack (MongoDB, Express, React, Node.js) and Next.js for
+                        performant web applications.
                       </p>
                       <p>
                         My development philosophy is rooted in understanding user needs, designing practical solutions, and writing maintainable code. I thrive on tackling real-world problems and continuously expanding my skillset.

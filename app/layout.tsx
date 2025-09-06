@@ -10,8 +10,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Backend Developer Portfolio</title>
-        <meta name="description" content="Professional portfolio for a backend developer" />
+        <title>Mamaru Yirga's Portfolio</title>
+        <meta name="description" content="Professional portfolio for a mobile app and developer" />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
